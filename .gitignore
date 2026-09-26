@@ -1,0 +1,46 @@
+# Environment and sensitive credentials
+.env
+.env.*
+!.env.example
+config/config.local.php
+
+# Operating System files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor & IDE directories
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# Logs and cache
+*.log
+logs/
+cache/
+
+# Uploads (ignore uploaded media while keeping directory structure)
+uploads/*
+!uploads/.gitkeep
+!uploads/products/
+uploads/products/*
+!uploads/products/.gitkeep
+
+# Temporary files
+tmp/
+temp/
+
+# Vendor (if dependencies are introduced in the future)
+/vendor/
+
+# Database dumps / backups
+*.sql.bak
+*.dump
