@@ -1,6 +1,6 @@
 -- ====================================================================
 -- ZOUZA SHOP - SCHEMA DE LA BASE DE DONNEES
--- Version: 1.0.0
+-- Version: 1.1.0 (Cles primaires explicites : table_id)
 -- Moteur: MySQL 8.x / MariaDB (XAMPP)
 -- Jeu de caracteres: utf8mb4 / utf8mb4_unicode_ci
 -- ====================================================================
@@ -30,7 +30,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- 3. TABLE: USERS (Utilisateurs et Administrateurs)
 -- ====================================================================
 CREATE TABLE `users` (
-    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `nom` VARCHAR(100) NOT NULL,
     `prenom` VARCHAR(100) NOT NULL,
     `email` VARCHAR(191) NOT NULL UNIQUE,
@@ -45,7 +45,7 @@ CREATE TABLE `users` (
 -- 4. TABLE: CATEGORIES (Categories de patisseries Zouza)
 -- ====================================================================
 CREATE TABLE `categories` (
-    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `category_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `nom` VARCHAR(100) NOT NULL,
     `slug` VARCHAR(120) NOT NULL UNIQUE,
     `description` TEXT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE `categories` (
 -- 5. TABLE: PRODUCTS (Produits / Variantes de Zouza)
 -- ====================================================================
 CREATE TABLE `products` (
-    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `product_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `category_id` INT UNSIGNED NOT NULL,
     `nom` VARCHAR(150) NOT NULL,
     `slug` VARCHAR(180) NOT NULL UNIQUE,
@@ -69,7 +69,7 @@ CREATE TABLE `products` (
     `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT `fk_products_category`
         FOREIGN KEY (`category_id`)
-        REFERENCES `categories` (`id`)
+        REFERENCES `categories` (`category_id`)
         ON DELETE RESTRICT
         ON UPDATE CASCADE,
     INDEX `idx_products_category_id` (`category_id`),
@@ -82,7 +82,7 @@ CREATE TABLE `products` (
 -- 6. TABLE: ORDERS (Commandes clients - supporte le checkout invite)
 -- ====================================================================
 CREATE TABLE `orders` (
-    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `order_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `reference` VARCHAR(40) NOT NULL UNIQUE,
     `user_id` INT UNSIGNED NULL,
     `nom_client` VARCHAR(100) NOT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE `orders` (
     `date_commande` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT `fk_orders_user`
         FOREIGN KEY (`user_id`)
-        REFERENCES `users` (`id`)
+        REFERENCES `users` (`user_id`)
         ON DELETE SET NULL
         ON UPDATE CASCADE,
     INDEX `idx_orders_user_id` (`user_id`),
@@ -111,7 +111,7 @@ CREATE TABLE `orders` (
 -- 7. TABLE: ORDER_ITEMS (Lignes de commande avec prix fige)
 -- ====================================================================
 CREATE TABLE `order_items` (
-    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `order_item_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `order_id` INT UNSIGNED NOT NULL,
     `product_id` INT UNSIGNED NOT NULL,
     `quantite` INT UNSIGNED NOT NULL DEFAULT 1,
@@ -119,12 +119,12 @@ CREATE TABLE `order_items` (
     `sous_total` DECIMAL(10,3) NOT NULL,
     CONSTRAINT `fk_order_items_order`
         FOREIGN KEY (`order_id`)
-        REFERENCES `orders` (`id`)
+        REFERENCES `orders` (`order_id`)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
     CONSTRAINT `fk_order_items_product`
         FOREIGN KEY (`product_id`)
-        REFERENCES `products` (`id`)
+        REFERENCES `products` (`product_id`)
         ON DELETE RESTRICT
         ON UPDATE CASCADE,
     INDEX `idx_order_items_order_id` (`order_id`),

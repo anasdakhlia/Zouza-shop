@@ -8,17 +8,21 @@ Ce dossier contient les scripts SQL pour initialiser la base de données du proj
 
 La base de données `zouza_shop` repose sur le moteur **InnoDB** avec encodage **utf8mb4_unicode_ci**.
 
-Elle est composée de 5 tables principales :
+Elle est composée de 5 tables principales avec des clés primaires explicites :
 
-1. **`users`** : Comptes administrateurs et clients inscrits (mots de passe hashés avec `password_hash()`).
-2. **`categories`** : Catégories de pâtisseries Zouza avec un `slug` unique pour les URLs.
-3. **`products`** : Produits vendus (variantes de Zouza), liés à une catégorie (`ON DELETE RESTRICT`).
-4. **`orders`** : Commandes clients, avec support du checkout invité (`user_id` est `NULL` si le client n'a pas de compte).
-5. **`order_items`** : Lignes d'articles d'une commande avec le prix unitaire et sous-total figés au moment de l'achat.
+1. **`users`** : Clé primaire `user_id`. Comptes administrateurs et clients inscrits (mots de passe hashés avec `password_hash()`).
+2. **`categories`** : Clé primaire `category_id`. Catégories de pâtisseries Zouza avec un `slug` unique pour les URLs.
+3. **`products`** : Clé primaire `product_id`. Produits vendus, liés à `categories(category_id)` (`ON DELETE RESTRICT`).
+4. **`orders`** : Clé primaire `order_id`. Commandes clients, avec support du checkout invité (`user_id` est `NULL` si le client n'a pas de compte).
+5. **`order_items`** : Clé primaire `order_item_id`. Lignes d'articles liées à `orders(order_id)` et `products(product_id)`, avec le prix unitaire et sous-total figés au moment de l'achat.
 
 ---
 
 ## 2. Choix d'Architecture Importants
+
+### Conventions de Nommage des Clés Primaires
+- Chaque clé primaire porte le nom explicite de son entité (`category_id`, `product_id`, `user_id`, `order_id`, `order_item_id`).
+- Cela simplifie les requêtes SQL, évite toute ambiguïté lors des jointures (`JOIN ... USING (category_id)`), et facilite la lisibilité du code MVC.
 
 ### Précision Monétaire : `DECIMAL(10, 3)`
 - Le dinar tunisien (TND) utilise 3 décimales (les millimes : ex. `18.500 TND`).
