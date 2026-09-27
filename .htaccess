@@ -1,0 +1,30 @@
+# ====================================================================
+# ZOUZA SHOP - Configuration Apache (.htaccess)
+# ====================================================================
+
+# 1. Empêcher l'affichage de l'arborescence des dossiers
+Options -Indexes
+
+# 2. Suivre les liens symboliques
+Options +FollowSymLinks
+
+# 3. Interdire l'accès direct aux fichiers sensibles
+<FilesMatch "(^\.|\.(env|sql|log|bak|dump|md)$)">
+    Require all denied
+</FilesMatch>
+
+# 4. Réécriture des URLs vers le Front Controller (index.php)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Bloquer l'accès direct aux répertoires internes sensibles
+    RewriteRule ^(\.git|config|core|database|views) - [F,L,NC]
+
+    # Laisser passer directement les requêtes ciblant des fichiers ou dossiers réels existants
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Rediriger toutes les autres requêtes vers le Front Controller
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
