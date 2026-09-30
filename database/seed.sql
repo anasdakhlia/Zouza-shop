@@ -20,10 +20,11 @@ TRUNCATE TABLE `categories`;
 TRUNCATE TABLE `users`;
 SET FOREIGN_KEY_CHECKS = 1;
 
--- 2. Insertion du compte administrateur de developpement
+-- 2. Insertion des comptes de developpement (admin & client de test)
 INSERT INTO `users` (`user_id`, `nom`, `prenom`, `email`, `telephone`, `password`, `role`, `created_at`)
 VALUES
-(1, 'Admin', 'Zouza', 'admin@zouza.local', '+216 20 000 000', '$2y$10$Y585wdcaaKWNHTNAbsscoeTdbqVIEtHbzqR4S1kGMYEzS5g9qJcja', 'admin', NOW());
+(1, 'Admin', 'Zouza', 'admin@zouza.local', '+216 20 000 000', '$2y$10$Y585wdcaaKWNHTNAbsscoeTdbqVIEtHbzqR4S1kGMYEzS5g9qJcja', 'admin', NOW()),
+(2, 'Client', 'Test', 'customer@zouza.local', '+216 21 111 222', '$2y$10$cnZWuXeQpnOQPy8N19pv6.gHH5KXKLO3hRKZ9dqwLCKWoQPb.GL3S', 'customer', NOW());
 
 -- 3. Insertion des categories de patisseries
 INSERT INTO `categories` (`category_id`, `nom`, `slug`, `description`, `created_at`)

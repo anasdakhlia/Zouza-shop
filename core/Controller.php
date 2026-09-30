@@ -2,8 +2,11 @@
 /**
  * ZOUZA SHOP - Contrôleur de Base
  *
- * Fournit les fonctionnalités communes réutilisables par les contrôleurs enfants.
+ * Fournit les fonctionnalités communes réutilisables par les contrôleurs enfants :
+ * rendu de vues, redirections, réponses JSON, authentification, rôles et protection CSRF.
  */
+
+require_once __DIR__ . '/Session.php';
 
 abstract class Controller
 {
@@ -16,8 +19,18 @@ abstract class Controller
      */
     protected function render(string $view, array $data = [], ?string $layout = 'front'): void
     {
-        // Extraction sécurisée des variables pour la vue
-        extract($data, EXTR_SKIP);
+        // Données globales automatiquement disponibles dans les vues
+        $defaultData = [
+            'currentUser'  => Session::user(),
+            'csrfToken'    => Session::getCsrfToken(),
+            'flashSuccess' => Session::getFlash('success'),
+            'flashError'   => Session::getFlash('error'),
+            'flashInfo'    => Session::getFlash('info'),
+        ];
+
+        // Fusion des données par défaut et des données passées
+        $viewData = array_merge($defaultData, $data);
+        extract($viewData, EXTR_SKIP);
 
         // Nettoyage du chemin pour interdire la traversée de répertoire
         $sanitizedView = str_replace(['../', '..\\'], '', $view);
@@ -44,6 +57,49 @@ abstract class Controller
             require $layoutPath;
         } else {
             echo $content;
+        }
+    }
+
+    /**
+     * Exige qu'un utilisateur soit authentifié pour continuer
+     */
+    protected function requireAuth(): void
+    {
+        if (!Session::isLoggedIn()) {
+            Session::setFlash('error', 'Veuillez vous connecter pour accéder à cette page.');
+            $this->redirect('/login');
+        }
+    }
+
+    /**
+     * Exige un rôle spécifique pour continuer (sinon 403 Forbidden)
+     */
+    protected function requireRole(string $role): void
+    {
+        $this->requireAuth();
+
+        if (!Session::hasRole($role)) {
+            ErrorHandler::renderForbidden("Vous n'avez pas les droits d'accès requis pour cette section.");
+        }
+    }
+
+    /**
+     * Exige le rôle administrateur (sinon 403 Forbidden)
+     */
+    protected function requireAdmin(): void
+    {
+        $this->requireRole('admin');
+    }
+
+    /**
+     * Valide le jeton CSRF pour les requêtes modifiant l'état (POST)
+     */
+    protected function validateCsrf(): void
+    {
+        $token = $_POST['csrf_token'] ?? null;
+
+        if (!Session::verifyCsrfToken($token)) {
+            ErrorHandler::renderForbidden('Requête refusée : jeton CSRF manquant ou invalide.');
         }
     }
 

@@ -21,6 +21,20 @@
             font-weight: 700;
             color: #b86b35;
         }
+        .btn-zouza-sm {
+            background-color: #b86b35;
+            color: #ffffff;
+            border: none;
+            padding: 0.35rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .btn-zouza-sm:hover {
+            background-color: #965324;
+            color: #ffffff;
+        }
         main {
             flex: 1;
         }
@@ -34,19 +48,49 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-zouza py-3">
-            <div class="container">
-                <a class="navbar-brand" href="<?= BASE_URL ?>/">
-                    <?= APP_NAME ?>
-                </a>
-                <span class="navbar-text small text-muted">
-                    <?= APP_TAGLINE ?>
-                </span>
+            <div class="container d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <a class="navbar-brand me-3" href="<?= BASE_URL ?>/">
+                        <?= APP_NAME ?>
+                    </a>
+                    <span class="navbar-text small text-muted d-none d-md-inline">
+                        <?= APP_TAGLINE ?>
+                    </span>
+                </div>
+
+                <div class="d-flex align-items-center gap-2">
+                    <?php if (!empty($currentUser)): ?>
+                        <span class="small text-muted me-2">
+                            Bonjour, <strong><?= htmlspecialchars($currentUser['prenom'], ENT_QUOTES, 'UTF-8') ?></strong>
+                        </span>
+                        <?php if ($currentUser['role'] === 'admin'): ?>
+                            <a href="<?= BASE_URL ?>/admin" class="btn btn-outline-dark btn-sm">Administration</a>
+                        <?php endif; ?>
+                        <a href="<?= BASE_URL ?>/logout" class="btn btn-sm btn-outline-secondary">Déconnexion</a>
+                    <?php else: ?>
+                        <a href="<?= BASE_URL ?>/login" class="btn-zouza-sm">Connexion</a>
+                    <?php endif; ?>
+                </div>
             </div>
         </nav>
     </header>
 
     <main class="py-5">
         <div class="container">
+            <?php if (!empty($flashSuccess)): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <?= htmlspecialchars($flashSuccess, ENT_QUOTES, 'UTF-8') ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($flashError)): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= htmlspecialchars($flashError, ENT_QUOTES, 'UTF-8') ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <?php endif; ?>
+
             <?= $content ?>
         </div>
     </main>

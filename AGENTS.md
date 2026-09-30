@@ -473,3 +473,55 @@ fix: validate checkout form
 feat: implement shopping cart
 
 
+## AI Agent Execution Policy
+
+The AI coding agent must treat AGENTS.md as the highest-priority
+project-specific development instruction.
+
+Before starting any significant task or phase, the agent MUST:
+
+1. Read AGENTS.md.
+2. Inspect the existing project structure.
+3. Inspect the relevant existing files.
+4. Inspect the database schema when database-related work is involved.
+5. Identify dependencies and possible regressions.
+6. Explain the implementation plan before making significant changes.
+
+The agent MUST NOT:
+
+- restart an already partially implemented phase blindly;
+- duplicate existing functionality;
+- silently redesign the architecture;
+- silently modify or delete database tables or columns;
+- introduce unnecessary frameworks or dependencies;
+- modify unrelated files;
+- commit automatically unless explicitly instructed;
+- push to GitHub unless explicitly instructed;
+- claim that tests passed unless they were actually executed;
+- claim that a feature works without verification;
+- expose secrets, credentials or passwords.
+
+For every significant phase:
+
+1. Inspect.
+2. Plan.
+3. Implement.
+4. Test.
+5. Review git diff.
+6. Report exactly what changed.
+7. STOP and wait for approval before commit when requested.
+
+If the agent encounters an API error, tool failure, rate limit,
+timeout, or interrupted operation:
+
+- do not restart the phase automatically;
+- do not duplicate existing work;
+- inspect git status first;
+- determine what was already changed;
+- continue only after establishing the current state.
+
+If an existing implementation is partially complete, preserve it
+and audit it before making additional changes.
+
+The agent must prefer simple, understandable PHP MVC code over
+unnecessary abstractions or overengineering.

@@ -56,6 +56,11 @@ class ErrorHandler
             return;
         }
 
+        if ($statusCode === 403) {
+            self::renderForbidden($e->getMessage());
+            return;
+        }
+
         self::renderServerError($e);
     }
 
@@ -73,6 +78,27 @@ class ErrorHandler
         } else {
             echo '<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><title>404</title></head><body>';
             echo '<h1>404 - Page Non Trouvée</h1>';
+            echo '<p>' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</p>';
+            echo '<a href="' . BASE_URL . '/">Retour à l\'accueil</a>';
+            echo '</body></html>';
+        }
+        exit;
+    }
+
+    /**
+     * Affiche une réponse 403 contrôlée (Accès interdit)
+     */
+    public static function renderForbidden(string $message = 'Accès non autorisé'): void
+    {
+        http_response_code(403);
+        $pageTitle = '403 - Accès Interdit';
+        $viewPath = __DIR__ . '/../views/errors/403.php';
+
+        if (file_exists($viewPath)) {
+            require $viewPath;
+        } else {
+            echo '<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><title>403</title></head><body>';
+            echo '<h1>403 - Accès Interdit</h1>';
             echo '<p>' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</p>';
             echo '<a href="' . BASE_URL . '/">Retour à l\'accueil</a>';
             echo '</body></html>';
