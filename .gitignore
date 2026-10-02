@@ -30,6 +30,7 @@ cache/
 # Uploads (ignore uploaded media while keeping directory structure)
 uploads/*
 !uploads/.gitkeep
+!uploads/.htaccess
 !uploads/products/
 uploads/products/*
 !uploads/products/.gitkeep

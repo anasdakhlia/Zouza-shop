@@ -1,0 +1,10 @@
+# Empêcher l'exécution de scripts dans le dossier d'uploads
+Options -Indexes -ExecCGI
+
+<FilesMatch "\.(php|phtml|php3|php4|php5|php7|phps|phar|sh|pl|cgi)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>

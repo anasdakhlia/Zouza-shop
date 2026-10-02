@@ -52,3 +52,26 @@ if (APP_ENV === 'development') {
     ini_set('display_startup_errors', '0');
     error_reporting(0);
 }
+
+// 7. Fonctions d'aide globales (Helpers)
+if (!function_exists('e')) {
+    /**
+     * Échappe une chaîne de caractères pour un affichage HTML sécurisé (anti-XSS)
+     */
+    function e(?string $value): string
+    {
+        return htmlspecialchars((string)($value ?? ''), ENT_QUOTES, 'UTF-8');
+    }
+}
+
+if (!function_exists('formatPrice')) {
+    /**
+     * Formate un montant dans la devise de la boutique (Dinar Tunisien avec 3 décimales)
+     */
+    function formatPrice(float|int|string $price): string
+    {
+        $decimals = defined('APP_CURRENCY_DECIMALS') ? APP_CURRENCY_DECIMALS : 3;
+        $symbol   = defined('APP_CURRENCY_SYMBOL') ? APP_CURRENCY_SYMBOL : 'DT';
+        return number_format((float)$price, $decimals, '.', ' ') . ' ' . $symbol;
+    }
+}

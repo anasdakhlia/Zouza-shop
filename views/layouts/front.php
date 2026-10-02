@@ -53,9 +53,12 @@
                     <a class="navbar-brand me-3" href="<?= BASE_URL ?>/">
                         <?= APP_NAME ?>
                     </a>
-                    <span class="navbar-text small text-muted d-none d-md-inline">
+                    <span class="navbar-text small text-muted d-none d-md-inline me-4">
                         <?= APP_TAGLINE ?>
                     </span>
+                    <a href="<?= BASE_URL ?>/products" class="btn btn-sm btn-outline-secondary d-none d-sm-inline-block">
+                        Nos Zouzas
+                    </a>
                 </div>
 
                 <div class="d-flex align-items-center gap-2">

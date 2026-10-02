@@ -67,6 +67,23 @@
                 <li class="list-group-item px-0">Rôle validé : <span class="badge bg-success"><?= htmlspecialchars($currentUser['role'], ENT_QUOTES, 'UTF-8') ?></span></li>
             </ul>
 
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <div class="card bg-light border p-3 rounded-3 h-100">
+                        <h6 class="fw-bold mb-1">Catégories de Pâtisseries</h6>
+                        <p class="small text-muted mb-3">Créer et gérer les catégories de Zouza.</p>
+                        <a href="<?= BASE_URL ?>/admin/categories" class="btn btn-outline-dark btn-sm mt-auto">Gérer les catégories &rarr;</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card bg-light border p-3 rounded-3 h-100">
+                        <h6 class="fw-bold mb-1">Catalogue Produits</h6>
+                        <p class="small text-muted mb-3">Ajouter des délices, ajuster les prix et photos.</p>
+                        <a href="<?= BASE_URL ?>/admin/products" class="btn btn-outline-dark btn-sm mt-auto">Gérer les produits &rarr;</a>
+                    </div>
+                </div>
+            </div>
+
             <div>
                 <a href="<?= BASE_URL ?>/" class="btn btn-secondary btn-sm me-2">Voir le site public</a>
                 <a href="<?= BASE_URL ?>/logout" class="btn btn-danger btn-sm">Se déconnecter</a>
