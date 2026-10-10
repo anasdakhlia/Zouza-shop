@@ -18,9 +18,9 @@ class AdminDashboardController extends Controller
         // 1. Exige le rôle administrateur (redirige vers /login si non connecté, ou 403 si rôle insuffisant)
         $this->requireAdmin();
 
-        // 2. Affiche la vue de confirmation d'autorisation
+        // 2. Affiche la vue de confirmation d'autorisation avec le layout d'administration
         $this->render('backoffice/dashboard', [
-            'pageTitle' => 'Espace Administration | ' . APP_NAME,
-        ], null);
+            'pageTitle' => 'Tableau de Bord Administration | ' . APP_NAME,
+        ], 'admin');
     }
 }

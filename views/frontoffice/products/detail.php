@@ -54,6 +54,36 @@
                 </div>
             </div>
 
+            <!-- Formulaire d'ajout au panier -->
+            <?php if ((int)$product['disponible'] === 1): ?>
+                <form method="POST" action="<?= BASE_URL ?>/cart/add" class="card p-3 border-0 bg-light rounded-4 mb-4">
+                    <input type="hidden" name="csrf_token" value="<?= e($csrfToken) ?>">
+                    <input type="hidden" name="product_id" value="<?= (int)$product['product_id'] ?>">
+                    <div class="row align-items-end g-3">
+                        <div class="col-sm-4">
+                            <label for="quantity" class="form-label fw-semibold small text-dark mb-1">Quantité :</label>
+                            <input type="number"
+                                   id="quantity"
+                                   name="quantity"
+                                   value="1"
+                                   min="1"
+                                   max="99"
+                                   class="form-control text-center fw-bold"
+                                   required>
+                        </div>
+                        <div class="col-sm-8">
+                            <button type="submit" class="btn btn-zouza w-100 py-2 fw-semibold">
+                                &#128722; Ajouter au panier
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            <?php else: ?>
+                <div class="alert alert-secondary small mb-4">
+                    Ce produit est momentanément en rupture de stock.
+                </div>
+            <?php endif; ?>
+
             <div class="mb-5">
                 <h5 class="fw-semibold text-dark mb-2">Description</h5>
                 <p class="text-muted leading-relaxed mb-0">

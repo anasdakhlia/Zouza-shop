@@ -77,9 +77,19 @@
                                     <?= formatPrice($prod['prix']) ?>
                                 </span>
                             </div>
-                            <a href="<?= BASE_URL ?>/products/detail?id=<?= (int)$prod['product_id'] ?>" class="btn-zouza-sm">
-                                Découvrir
-                            </a>
+                            <div class="d-flex gap-2">
+                                <a href="<?= BASE_URL ?>/products/detail?id=<?= (int)$prod['product_id'] ?>" class="btn btn-sm btn-outline-secondary">
+                                    Détails
+                                </a>
+                                <form method="POST" action="<?= BASE_URL ?>/cart/add" style="display:inline;">
+                                    <input type="hidden" name="csrf_token" value="<?= e($csrfToken) ?>">
+                                    <input type="hidden" name="product_id" value="<?= (int)$prod['product_id'] ?>">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn-zouza-sm border-0" title="Ajouter au panier">
+                                        &#128722; Ajouter
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
