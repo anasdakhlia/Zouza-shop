@@ -86,6 +86,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="<?= BASE_URL ?>/admin/products">Produits</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= BASE_URL ?>/admin/orders">Commandes</a>
+                        </li>
                     </ul>
                     <div class="d-flex align-items-center gap-3">
                         <a href="<?= BASE_URL ?>/" class="btn btn-sm btn-outline-light" target="_blank">
