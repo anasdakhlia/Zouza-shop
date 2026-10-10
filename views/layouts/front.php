@@ -62,10 +62,24 @@
                 </div>
 
                 <div class="d-flex align-items-center gap-2">
+                    <a href="<?= BASE_URL ?>/cart" class="btn btn-sm btn-outline-dark position-relative me-2">
+                        &#128722; Panier
+                        <?php
+                            $cartCount = class_exists('Cart') ? Cart::countItems() : 0;
+                            if ($cartCount > 0):
+                        ?>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem;">
+                                <?= $cartCount ?>
+                            </span>
+                        <?php endif; ?>
+                    </a>
+
                     <?php if (!empty($currentUser)): ?>
                         <span class="small text-muted me-2">
                             Bonjour, <strong><?= htmlspecialchars($currentUser['prenom'], ENT_QUOTES, 'UTF-8') ?></strong>
                         </span>
+                        <a href="<?= BASE_URL ?>/profile" class="btn btn-sm btn-outline-secondary">Mon Profil</a>
+                        <a href="<?= BASE_URL ?>/orders" class="btn btn-sm btn-outline-dark">Mes Commandes</a>
                         <?php if ($currentUser['role'] === 'admin'): ?>
                             <a href="<?= BASE_URL ?>/admin" class="btn btn-outline-dark btn-sm">Administration</a>
                         <?php endif; ?>

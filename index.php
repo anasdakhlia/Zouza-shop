@@ -22,13 +22,19 @@ require_once __DIR__ . '/core/Router.php';
 require_once __DIR__ . '/core/Controller.php';
 require_once __DIR__ . '/core/Model.php';
 
-// 5. Chargement des contrôleurs
+// 5. Chargement des modèles transversaux et contrôleurs
+require_once __DIR__ . '/models/Cart.php';
+require_once __DIR__ . '/models/Order.php';
 require_once __DIR__ . '/controllers/HomeController.php';
 require_once __DIR__ . '/controllers/AuthController.php';
 require_once __DIR__ . '/controllers/ProductController.php';
+require_once __DIR__ . '/controllers/CartController.php';
+require_once __DIR__ . '/controllers/OrderController.php';
+require_once __DIR__ . '/controllers/ProfileController.php';
 require_once __DIR__ . '/controllers/admin/AdminDashboardController.php';
 require_once __DIR__ . '/controllers/admin/AdminCategoryController.php';
 require_once __DIR__ . '/controllers/admin/AdminProductController.php';
+require_once __DIR__ . '/controllers/admin/AdminOrderController.php';
 
 // 6. Définition des routes de l'application
 $router = new Router();
@@ -37,6 +43,25 @@ $router = new Router();
 $router->get('/', [HomeController::class, 'index']);
 $router->get('/products', [ProductController::class, 'index']);
 $router->get('/products/detail', [ProductController::class, 'detail']);
+
+// Panier d'achat (accessible à tous : invités et connectés)
+$router->get('/cart', [CartController::class, 'index']);
+$router->post('/cart/add', [CartController::class, 'add']);
+$router->post('/cart/update', [CartController::class, 'update']);
+$router->post('/cart/remove', [CartController::class, 'remove']);
+$router->post('/cart/clear', [CartController::class, 'clear']);
+
+// Commande client (Checkout & Suivi)
+$router->get('/checkout', [OrderController::class, 'checkout']);
+$router->post('/checkout', [OrderController::class, 'processCheckout']);
+$router->get('/order/confirmation', [OrderController::class, 'confirmation']);
+$router->get('/orders', [OrderController::class, 'myOrders']);
+$router->get('/orders/detail', [OrderController::class, 'detail']);
+
+// Espace client personnel (Profil)
+$router->get('/profile', [ProfileController::class, 'show']);
+$router->post('/profile', [ProfileController::class, 'update']);
+$router->post('/profile/password', [ProfileController::class, 'updatePassword']);
 
 // Routes d'authentification
 $router->get('/login', [AuthController::class, 'showLogin']);
@@ -62,6 +87,11 @@ $router->post('/admin/products/create', [AdminProductController::class, 'store']
 $router->get('/admin/products/edit', [AdminProductController::class, 'edit']);
 $router->post('/admin/products/edit', [AdminProductController::class, 'update']);
 $router->post('/admin/products/delete', [AdminProductController::class, 'delete']);
+
+// Administration des commandes
+$router->get('/admin/orders', [AdminOrderController::class, 'index']);
+$router->get('/admin/orders/detail', [AdminOrderController::class, 'detail']);
+$router->post('/admin/orders/status', [AdminOrderController::class, 'updateStatus']);
 
 // 7. Exécution du routage
 $requestMethod = $_SERVER['REQUEST_METHOD'] ?? 'GET';
