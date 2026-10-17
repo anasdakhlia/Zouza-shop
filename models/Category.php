@@ -223,4 +223,15 @@ class Category extends Model
 
         return $slug;
     }
+
+    /**
+     * Compte le nombre total de catégories enregistrées
+     *
+     * @return int
+     */
+    public function countAll(): int
+    {
+        $stmt = $this->db->query("SELECT COUNT(*) FROM categories");
+        return (int)$stmt->fetchColumn();
+    }
 }

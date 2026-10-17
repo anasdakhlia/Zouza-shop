@@ -158,4 +158,15 @@ class User extends Model
         $res = $stmt->fetch();
         return $res ?: null;
     }
+
+    /**
+     * Compte le nombre total de clients enregistrés (exclut les administrateurs)
+     *
+     * @return int
+     */
+    public function countCustomers(): int
+    {
+        $stmt = $this->db->query("SELECT COUNT(*) FROM users WHERE role = 'customer'");
+        return (int)$stmt->fetchColumn();
+    }
 }

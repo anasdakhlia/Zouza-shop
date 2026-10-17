@@ -71,6 +71,7 @@ $router->post('/logout', [AuthController::class, 'logout']);
 
 // Routes d'administration protégées
 $router->get('/admin', [AdminDashboardController::class, 'index']);
+$router->get('/admin/dashboard', [AdminDashboardController::class, 'index']);
 
 // Administration des catégories
 $router->get('/admin/categories', [AdminCategoryController::class, 'index']);

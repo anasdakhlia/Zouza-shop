@@ -418,4 +418,90 @@ class Order extends Model
             ':id'     => $orderId,
         ]);
     }
+
+    /**
+     * Compte le nombre total de commandes enregistrées
+     *
+     * @return int
+     */
+    public function countAll(): int
+    {
+        $stmt = $this->db->query("SELECT COUNT(*) FROM orders");
+        return (int)$stmt->fetchColumn();
+    }
+
+    /**
+     * Calcule le chiffre d'affaires cumulé des commandes
+     *
+     * @param bool $excludeCancelled Exclure ou non les commandes annulées (par défaut true)
+     * @return float
+     */
+    public function getTotalRevenue(bool $excludeCancelled = true): float
+    {
+        $sql = "SELECT COALESCE(SUM(total), 0) FROM orders";
+        if ($excludeCancelled) {
+            $sql .= " WHERE statut != 'cancelled'";
+        }
+
+        $stmt = $this->db->query($sql);
+        return (float)$stmt->fetchColumn();
+    }
+
+    /**
+     * Récupère les dernières commandes passées sur la boutique
+     *
+     * @param int $limit Nombre maximal de commandes à retourner (par défaut 5)
+     * @return array
+     */
+    public function getRecentOrders(int $limit = 5): array
+    {
+        $limit = max(1, (int)$limit);
+
+        $sql = "SELECT o.order_id, o.reference, o.user_id, o.nom_client, o.prenom_client,
+                       o.telephone, o.email, o.type_livraison, o.total, o.statut,
+                       o.date_commande,
+                       COUNT(oi.order_item_id) AS items_count
+                FROM orders o
+                LEFT JOIN order_items oi ON o.order_id = oi.order_id
+                GROUP BY o.order_id
+                ORDER BY o.date_commande DESC, o.order_id DESC
+                LIMIT :limit";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * Récupère le palmarès des produits les plus vendus (quantités et chiffre d'affaires généré)
+     * Exclut les commandes annulées pour refléter les ventes effectives.
+     *
+     * @param int $limit Nombre maximal de produits à retourner (par défaut 5)
+     * @return array
+     */
+    public function getBestSellingProducts(int $limit = 5): array
+    {
+        $limit = max(1, (int)$limit);
+
+        $sql = "SELECT p.product_id, p.nom, p.slug, p.prix, p.image,
+                       c.nom AS category_name,
+                       SUM(oi.quantite) AS total_sold,
+                       SUM(oi.sous_total) AS total_revenue
+                FROM order_items oi
+                INNER JOIN products p ON oi.product_id = p.product_id
+                LEFT JOIN categories c ON p.category_id = c.category_id
+                INNER JOIN orders o ON oi.order_id = o.order_id
+                WHERE o.statut != 'cancelled'
+                GROUP BY p.product_id, p.nom, p.slug, p.prix, p.image, c.nom
+                ORDER BY total_sold DESC, total_revenue DESC
+                LIMIT :limit";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
 }

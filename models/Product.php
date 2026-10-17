@@ -285,4 +285,147 @@ class Product extends Model
 
         return $slug;
     }
+
+    /**
+     * Compte le nombre total de produits enregistrés
+     *
+     * @return int
+     */
+    public function countAll(): int
+    {
+        $stmt = $this->db->query("SELECT COUNT(*) FROM products");
+        return (int)$stmt->fetchColumn();
+    }
+
+    /**
+     * Compte le nombre de produits actuellement disponibles à la vente
+     *
+     * @return int
+     */
+    public function countAvailable(): int
+    {
+        $stmt = $this->db->query("SELECT COUNT(*) FROM products WHERE disponible = 1");
+        return (int)$stmt->fetchColumn();
+    }
+
+    /**
+     * Recherche et filtre les produits avec pagination et tri sécurisé
+     *
+     * @param array $filters [
+     *     'search'        => string,
+     *     'category_id'   => int,
+     *     'category_slug' => string,
+     *     'availability'  => string ('1', '0', 'all'),
+     *     'sort'          => string ('newest', 'price_asc', 'price_desc', 'name_asc')
+     * ]
+     * @param int $page Numéro de page courant (1-indexé)
+     * @param int $perPage Nombre d'articles par page
+     * @return array [
+     *     'items'       => array,
+     *     'total'       => int,
+     *     'page'        => int,
+     *     'per_page'    => int,
+     *     'total_pages' => int
+     * ]
+     */
+    public function searchAndFilter(array $filters = [], int $page = 1, int $perPage = 6): array
+    {
+        $page    = max(1, $page);
+        $perPage = max(1, min(100, $perPage));
+
+        $where = [];
+        $params = [];
+
+        // 1. Recherche textuelle multi-champs (Nom, Description, Catégorie)
+        $search = trim($filters['search'] ?? ($filters['q'] ?? ''));
+        if ($search !== '') {
+            $where[] = "(p.nom LIKE :s1 OR p.description LIKE :s2 OR c.nom LIKE :s3)";
+            $searchVal = '%' . $search . '%';
+            $params[':s1'] = $searchVal;
+            $params[':s2'] = $searchVal;
+            $params[':s3'] = $searchVal;
+        }
+
+        // 2. Filtrage par catégorie (par identifiant ou par slug)
+        if (!empty($filters['category_id']) && (int)$filters['category_id'] > 0) {
+            $where[] = "p.category_id = :cat_id";
+            $params[':cat_id'] = (int)$filters['category_id'];
+        } elseif (!empty($filters['category_slug'])) {
+            $where[] = "c.slug = :cat_slug";
+            $params[':cat_slug'] = trim($filters['category_slug']);
+        }
+
+        // 3. Filtrage par disponibilité
+        $availability = $filters['availability'] ?? null;
+        if ($availability === '1' || $availability === 'in_stock') {
+            $where[] = "p.disponible = 1";
+        } elseif ($availability === '0' || $availability === 'out_of_stock') {
+            $where[] = "p.disponible = 0";
+        } elseif ($availability === 'all') {
+            // Aucun filtre : affiche disponibles et en rupture
+        } else {
+            // Par défaut dans le catalogue : uniquement les produits disponibles
+            $where[] = "p.disponible = 1";
+        }
+
+        $whereSql = !empty($where) ? ' WHERE ' . implode(' AND ', $where) : '';
+
+        // 4. Calcul du nombre total d'enregistrements correspondants
+        $countSql = "SELECT COUNT(*)
+                     FROM products p
+                     INNER JOIN categories c ON p.category_id = c.category_id
+                     {$whereSql}";
+
+        $countStmt = $this->db->prepare($countSql);
+        $countStmt->execute($params);
+        $totalItems = (int)$countStmt->fetchColumn();
+
+        $totalPages = max(1, (int)ceil($totalItems / $perPage));
+
+        // Ajuster la page si hors limites et des éléments existent
+        if ($page > $totalPages && $totalItems > 0) {
+            $page = $totalPages;
+        }
+
+        $offset = ($page - 1) * $perPage;
+
+        // 5. Tri validé par liste blanche stricte
+        $allowedSorts = [
+            'newest'     => 'p.product_id DESC',
+            'price_asc'  => 'p.prix ASC, p.product_id DESC',
+            'price_desc' => 'p.prix DESC, p.product_id DESC',
+            'name_asc'   => 'p.nom ASC, p.product_id DESC',
+            'name_desc'  => 'p.nom DESC, p.product_id DESC',
+        ];
+        $sortKey = $filters['sort'] ?? 'newest';
+        $orderClause = $allowedSorts[$sortKey] ?? $allowedSorts['newest'];
+
+        // 6. Récupération des données paginées
+        $dataSql = "SELECT p.product_id, p.category_id, p.nom, p.slug, p.description,
+                           p.prix, p.image, p.disponible, p.created_at, p.updated_at,
+                           c.nom AS category_name, c.slug AS category_slug
+                    FROM products p
+                    INNER JOIN categories c ON p.category_id = c.category_id
+                    {$whereSql}
+                    ORDER BY {$orderClause}
+                    LIMIT :limit OFFSET :offset";
+
+        $dataStmt = $this->db->prepare($dataSql);
+        foreach ($params as $key => $val) {
+            $dataStmt->bindValue($key, $val);
+        }
+        $dataStmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
+        $dataStmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $dataStmt->execute();
+
+        $items = $dataStmt->fetchAll();
+
+        return [
+            'items'       => $items,
+            'total'       => $totalItems,
+            'page'        => $page,
+            'per_page'    => $perPage,
+            'total_pages' => $totalPages,
+        ];
+    }
 }
