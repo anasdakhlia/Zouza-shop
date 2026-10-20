@@ -22,7 +22,6 @@
             box-shadow: 0 10px 30px rgba(139, 90, 43, 0.08);
             max-width: 680px;
             width: 100%;
-            padding: 2.5rem;
         }
         .error-code {
             font-size: 4rem;
@@ -59,7 +58,7 @@
 </head>
 <body>
     <div class="container py-4">
-        <div class="error-card mx-auto text-center">
+        <div class="error-card mx-auto text-center p-4 p-md-5">
             <div class="error-code">500</div>
             <h1 class="h4 mb-3">Une erreur inattendue est survenue</h1>
             <p class="text-muted mb-4">

@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
     <div class="col-lg-8">
-        <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
             <h1 class="h4 mb-0 text-dark">Modifier le Produit #<?= (int)$product['product_id'] ?></h1>
             <a href="<?= BASE_URL ?>/admin/products" class="btn btn-sm btn-outline-secondary">
                 &larr; Retour aux produits

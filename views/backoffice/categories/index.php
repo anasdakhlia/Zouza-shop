@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
     <div>
         <h1 class="h3 mb-0 text-dark">Gestion des Catégories</h1>
         <p class="text-muted small mb-0">Organisez les familles de pâtisseries Zouza</p>

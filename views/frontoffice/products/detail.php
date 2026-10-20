@@ -1,13 +1,13 @@
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/" class="text-decoration-none" style="color: #b86b35;">Accueil</a></li>
-        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/products" class="text-decoration-none" style="color: #b86b35;">Nos Zouzas</a></li>
-        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/products?category=<?= urlencode($product['category_slug']) ?>" class="text-decoration-none" style="color: #b86b35;"><?= e($product['category_name']) ?></a></li>
+        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/" class="text-decoration-none text-zouza">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/products" class="text-decoration-none text-zouza">Nos Zouzas</a></li>
+        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/products?category=<?= urlencode($product['category_slug']) ?>" class="text-decoration-none text-zouza"><?= e($product['category_name']) ?></a></li>
         <li class="breadcrumb-item active" aria-current="page"><?= e($product['nom']) ?></li>
     </ol>
 </nav>
 
-<div class="card border-0 shadow-sm rounded-4 overflow-hidden p-4 p-md-5 bg-white">
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden p-4 p-md-5 bg-white card-zouza">
     <div class="row g-5 align-items-center">
         <!-- Photo du produit -->
         <div class="col-lg-6">

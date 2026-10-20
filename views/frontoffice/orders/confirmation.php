@@ -1,11 +1,11 @@
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/" class="text-decoration-none" style="color: #b86b35;">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/" class="text-decoration-none text-zouza">Accueil</a></li>
         <li class="breadcrumb-item active" aria-current="page">Confirmation de commande</li>
     </ol>
 </nav>
 
-<div class="card border-0 shadow-sm rounded-4 p-5 bg-white text-center mb-4">
+<div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white text-center mb-4 card-zouza">
     <div class="mb-3">
         <div class="display-3 text-success">&#10004;</div>
     </div>
@@ -14,7 +14,7 @@
         Votre commande a été enregistrée avec succès. Notre atelier artisanal prépare vos Zouzas avec le plus grand soin.
     </p>
 
-    <div class="d-inline-flex align-items-center justify-content-center gap-2 p-3 bg-light rounded-3 border mx-auto mt-2">
+    <div class="d-inline-flex flex-wrap align-items-center justify-content-center gap-2 p-3 bg-light rounded-3 border mx-auto mt-2">
         <span class="text-muted">Référence de commande :</span>
         <strong class="fs-5 text-dark"><?= e($order['reference']) ?></strong>
     </div>
@@ -134,7 +134,7 @@
                     &larr; Découvrir d'autres délices
                 </a>
                 <?php if (Session::isLoggedIn()): ?>
-                    <a href="<?= BASE_URL ?>/orders" class="btn text-white py-2" style="background-color: #b86b35;">
+                    <a href="<?= BASE_URL ?>/orders" class="btn btn-zouza py-2">
                         Consulter mes commandes
                     </a>
                 <?php endif; ?>

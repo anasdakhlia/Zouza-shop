@@ -1,15 +1,15 @@
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/" class="text-decoration-none" style="color: #b86b35;">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/" class="text-decoration-none text-zouza">Accueil</a></li>
         <li class="breadcrumb-item active" aria-current="page">Mon Profil</li>
     </ol>
 </nav>
 
-<div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+<div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 card-zouza">
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
         <div class="d-flex align-items-center gap-3">
-            <div class="rounded-circle d-flex align-items-center justify-content-center text-white fs-3 fw-bold"
-                 style="width: 64px; height: 64px; background-color: #b86b35;">
+            <div class="rounded-circle d-flex align-items-center justify-content-center text-white fs-3 fw-bold bg-zouza"
+                 style="width: 64px; height: 64px;">
                 <?= mb_strtoupper(mb_substr($user['prenom'], 0, 1)) . mb_strtoupper(mb_substr($user['nom'], 0, 1)) ?>
             </div>
             <div>
@@ -33,7 +33,7 @@
     <!-- Colonne Gauche : Formulaires Profil & Mot de passe -->
     <div class="col-lg-7">
         <!-- Formulaire Informations Personnelles -->
-        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 card-zouza">
             <h2 class="h5 fw-bold text-dark mb-3 border-bottom pb-2">Informations personnelles</h2>
 
             <form method="POST" action="<?= BASE_URL ?>/profile">
@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="mt-4 text-end">
-                    <button type="submit" class="btn text-white px-4 fw-semibold" style="background-color: #b86b35;">
+                    <button type="submit" class="btn btn-zouza px-4 fw-semibold">
                         &#10003; Enregistrer les modifications
                     </button>
                 </div>
@@ -94,7 +94,7 @@
         </div>
 
         <!-- Formulaire Changement de Mot de Passe -->
-        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white card-zouza">
             <h2 class="h5 fw-bold text-dark mb-3 border-bottom pb-2">Sécurité & Mot de passe</h2>
 
             <form method="POST" action="<?= BASE_URL ?>/profile/password">
@@ -113,12 +113,12 @@
                     <div class="col-sm-6">
                         <label for="new_password" class="form-label small fw-semibold">Nouveau mot de passe <span class="text-danger">*</span></label>
                         <input type="password"
-                               id="new_password"
-                               name="new_password"
-                               class="form-control"
-                               placeholder="6 caractères minimum"
-                               required
-                               minlength="6">
+                           id="new_password"
+                           name="new_password"
+                           class="form-control"
+                           placeholder="6 caractères minimum"
+                           required
+                           minlength="6">
                     </div>
 
                     <div class="col-sm-6">
@@ -145,7 +145,7 @@
     <!-- Colonne Droite : Adresse connue & Aperçu Commandes Récentes -->
     <div class="col-lg-5">
         <!-- Carte Adresse de livraison connue -->
-        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 card-zouza">
             <h2 class="h5 fw-bold text-dark mb-3 border-bottom pb-2 d-flex align-items-center gap-2">
                 <span>&#128205;</span> Adresse de livraison
             </h2>
@@ -168,10 +168,10 @@
         </div>
 
         <!-- Carte Commandes Récentes -->
-        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white card-zouza">
             <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
                 <h2 class="h5 fw-bold text-dark mb-0">Commandes récentes</h2>
-                <a href="<?= BASE_URL ?>/orders" class="small text-decoration-none" style="color: #b86b35;">
+                <a href="<?= BASE_URL ?>/orders" class="small text-decoration-none text-zouza">
                     Tout voir &rarr;
                 </a>
             </div>

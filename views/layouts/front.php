@@ -5,65 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle ?? APP_NAME, ENT_QUOTES, 'UTF-8') ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #faf7f2;
-            color: #3d2f24;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        .navbar-zouza {
-            background-color: #ffffff;
-            border-bottom: 1px solid #ebd9c8;
-        }
-        .navbar-brand {
-            font-weight: 700;
-            color: #b86b35;
-        }
-        .btn-zouza-sm {
-            background-color: #b86b35;
-            color: #ffffff;
-            border: none;
-            padding: 0.35rem 1rem;
-            border-radius: 6px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            text-decoration: none;
-        }
-        .btn-zouza-sm:hover {
-            background-color: #965324;
-            color: #ffffff;
-        }
-        main {
-            flex: 1;
-        }
-        footer {
-            background-color: #2b2118;
-            color: #d8c8b8;
-            font-size: 0.9rem;
-        }
-    </style>
+    <link href="<?= BASE_URL ?>/assets/css/front.css" rel="stylesheet">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-zouza py-3">
-            <div class="container d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                    <a class="navbar-brand me-3" href="<?= BASE_URL ?>/">
-                        <?= APP_NAME ?>
-                    </a>
-                    <span class="navbar-text small text-muted d-none d-md-inline me-4">
-                        <?= APP_TAGLINE ?>
-                    </span>
-                    <a href="<?= BASE_URL ?>/products" class="btn btn-sm btn-outline-secondary d-none d-sm-inline-block">
-                        Nos Zouzas
-                    </a>
-                </div>
+        <nav class="navbar navbar-expand-lg navbar-zouza py-2 py-lg-3">
+            <div class="container">
+                <!-- Brand Logo & Tagline -->
+                <a class="navbar-brand d-flex align-items-center me-3" href="<?= BASE_URL ?>/">
+                    <span><?= APP_NAME ?></span>
+                </a>
+                <span class="navbar-text small text-muted d-none d-xl-inline me-3">
+                    <?= APP_TAGLINE ?>
+                </span>
 
-                <div class="d-flex align-items-center gap-2">
-                    <a href="<?= BASE_URL ?>/cart" class="btn btn-sm btn-outline-dark position-relative me-2">
-                        &#128722; Panier
+                <!-- Quick Action on Mobile: Cart Badge + Navbar Toggler -->
+                <div class="d-flex align-items-center gap-2 order-lg-last">
+                    <a href="<?= BASE_URL ?>/cart" class="btn btn-sm btn-outline-dark position-relative me-1" title="Voir le panier">
+                        &#128722; <span class="d-none d-sm-inline">Panier</span>
                         <?php
                             $cartCount = class_exists('Cart') ? Cart::countItems() : 0;
                             if ($cartCount > 0):
@@ -74,37 +33,75 @@
                         <?php endif; ?>
                     </a>
 
-                    <?php if (!empty($currentUser)): ?>
-                        <span class="small text-muted me-2">
-                            Bonjour, <strong><?= htmlspecialchars($currentUser['prenom'], ENT_QUOTES, 'UTF-8') ?></strong>
-                        </span>
-                        <a href="<?= BASE_URL ?>/profile" class="btn btn-sm btn-outline-secondary">Mon Profil</a>
-                        <a href="<?= BASE_URL ?>/orders" class="btn btn-sm btn-outline-dark">Mes Commandes</a>
-                        <?php if ($currentUser['role'] === 'admin'): ?>
-                            <a href="<?= BASE_URL ?>/admin" class="btn btn-outline-dark btn-sm">Administration</a>
+                    <button class="navbar-toggler border-0 p-2" type="button" data-bs-toggle="collapse" data-bs-target="#frontNav" aria-controls="frontNav" aria-expanded="false" aria-label="Menu de navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Collapsible Navigation Menu -->
+                <div class="collapse navbar-collapse" id="frontNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 py-2 py-lg-0">
+                        <li class="nav-item">
+                            <a href="<?= BASE_URL ?>/products" class="nav-link">
+                                &#129367; Nos Zouzas
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- User Account / Authentication Links -->
+                    <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-2 pt-2 pt-lg-0 border-top border-lg-0">
+                        <?php if (!empty($currentUser)): ?>
+                            <span class="small text-muted me-lg-2 py-1">
+                                Bonjour, <strong><?= htmlspecialchars($currentUser['prenom'], ENT_QUOTES, 'UTF-8') ?></strong>
+                            </span>
+                            <a href="<?= BASE_URL ?>/profile" class="btn btn-sm btn-outline-secondary">
+                                Mon Profil
+                            </a>
+                            <a href="<?= BASE_URL ?>/orders" class="btn btn-sm btn-outline-dark">
+                                Mes Commandes
+                            </a>
+                            <?php if ($currentUser['role'] === 'admin'): ?>
+                                <a href="<?= BASE_URL ?>/admin" class="btn btn-sm btn-zouza">
+                                    Administration &rarr;
+                                </a>
+                            <?php endif; ?>
+                            <a href="<?= BASE_URL ?>/logout" class="btn btn-sm btn-outline-danger">
+                                Déconnexion
+                            </a>
+                        <?php else: ?>
+                            <a href="<?= BASE_URL ?>/login" class="btn-zouza-sm">
+                                &#128274; Connexion
+                            </a>
                         <?php endif; ?>
-                        <a href="<?= BASE_URL ?>/logout" class="btn btn-sm btn-outline-secondary">Déconnexion</a>
-                    <?php else: ?>
-                        <a href="<?= BASE_URL ?>/login" class="btn-zouza-sm">Connexion</a>
-                    <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main class="py-5">
+    <main class="py-4 py-lg-5">
         <div class="container">
             <?php if (!empty($flashSuccess)): ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <?= htmlspecialchars($flashSuccess, ENT_QUOTES, 'UTF-8') ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <div class="alert alert-success alert-dismissible fade show d-flex align-items-center gap-2 shadow-sm" role="alert">
+                    <span class="fs-5">&#10003;</span>
+                    <div class="flex-grow-1"><?= htmlspecialchars($flashSuccess, ENT_QUOTES, 'UTF-8') ?></div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
                 </div>
             <?php endif; ?>
 
             <?php if (!empty($flashError)): ?>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <?= htmlspecialchars($flashError, ENT_QUOTES, 'UTF-8') ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center gap-2 shadow-sm" role="alert">
+                    <span class="fs-5">&#9888;</span>
+                    <div class="flex-grow-1"><?= htmlspecialchars($flashError, ENT_QUOTES, 'UTF-8') ?></div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($flashInfo)): ?>
+                <div class="alert alert-info alert-dismissible fade show d-flex align-items-center gap-2 shadow-sm" role="alert">
+                    <span class="fs-5">&#8505;</span>
+                    <div class="flex-grow-1"><?= htmlspecialchars($flashInfo, ENT_QUOTES, 'UTF-8') ?></div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
                 </div>
             <?php endif; ?>
 
@@ -114,7 +111,7 @@
 
     <footer class="py-4 text-center mt-auto">
         <div class="container">
-            <p class="mb-0">&copy; <?= date('Y') ?> <?= APP_NAME ?> — Tous droits réservés.</p>
+            <p class="mb-0 text-muted small">&copy; <?= date('Y') ?> <?= APP_NAME ?> — Tous droits réservés.</p>
         </div>
     </footer>
 

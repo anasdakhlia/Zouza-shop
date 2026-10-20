@@ -22,7 +22,6 @@
             box-shadow: 0 10px 30px rgba(139, 90, 43, 0.08);
             max-width: 520px;
             width: 100%;
-            padding: 2.5rem;
             text-align: center;
         }
         .error-code {
@@ -49,8 +48,8 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="error-card mx-auto">
+    <div class="container py-4">
+        <div class="error-card mx-auto p-4 p-md-5">
             <div class="error-code">404</div>
             <h1 class="h4 mb-3">Douceur introuvable...</h1>
             <p class="text-muted mb-4">

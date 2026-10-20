@@ -1,12 +1,12 @@
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/" class="text-decoration-none" style="color: #b86b35;">Accueil</a></li>
-        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/products" class="text-decoration-none" style="color: #b86b35;">Nos Zouzas</a></li>
+        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/" class="text-decoration-none text-zouza">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/products" class="text-decoration-none text-zouza">Nos Zouzas</a></li>
         <li class="breadcrumb-item active" aria-current="page">Mon Panier</li>
     </ol>
 </nav>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
     <div>
         <h1 class="h3 fw-bold text-dark mb-1">Mon Panier Gourmand</h1>
         <p class="text-muted small mb-0">Vérifiez vos délices sélectionnés avant de passer commande</p>
@@ -22,12 +22,12 @@
 </div>
 
 <?php if (empty($items)): ?>
-    <div class="card border-0 shadow-sm rounded-4 p-5 text-center my-4 bg-white">
+    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 text-center my-4 bg-white card-zouza">
         <div class="py-4">
             <div class="display-3 mb-3 text-muted">&#128722;</div>
             <h2 class="h4 text-dark mb-2">Votre panier est actuellement vide</h2>
             <p class="text-muted mb-4">Vous n'avez pas encore sélectionné de délicieuses Zouzas.</p>
-            <a href="<?= BASE_URL ?>/products" class="btn-zouza-sm px-4 py-2 fs-6">
+            <a href="<?= BASE_URL ?>/products" class="btn btn-zouza px-4 py-2 fs-6">
                 Découvrir nos créations &rarr;
             </a>
         </div>
@@ -135,7 +135,7 @@
 
         <!-- Récapitulatif de commande -->
         <div class="col-lg-4">
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white card-zouza">
                 <h4 class="h5 fw-bold text-dark mb-3">Récapitulatif</h4>
 
                 <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
@@ -150,12 +150,12 @@
 
                 <div class="d-flex justify-content-between align-items-center pt-3 mb-4">
                     <span class="fs-5 fw-bold text-dark">Total :</span>
-                    <span class="fs-4 fw-bold" style="color: #b86b35;">
+                    <span class="fs-4 fw-bold text-zouza">
                         <?= formatPrice($total) ?>
                     </span>
                 </div>
 
-                <a href="<?= BASE_URL ?>/checkout" class="btn text-white w-100 py-3 fw-bold mb-2 shadow-sm rounded-3" style="background-color: #b86b35;">
+                <a href="<?= BASE_URL ?>/checkout" class="btn btn-zouza w-100 py-3 fw-bold mb-2 shadow-sm rounded-3">
                     Passer la commande &rarr;
                 </a>
 

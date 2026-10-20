@@ -76,9 +76,9 @@
             <input type="hidden" name="category" value="<?= e($selectedCategory['slug']) ?>">
         <?php endif; ?>
 
-        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
             <!-- Compteur de résultats -->
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center flex-wrap gap-2">
                 <span class="fs-5 fw-bold text-dark"><?= (int)$totalItems ?></span>
                 <span class="text-muted small"><?= (int)$totalItems > 1 ? 'délices trouvés' : 'délice trouvé' ?></span>
 
@@ -90,25 +90,25 @@
             </div>
 
             <!-- Filtres sélectifs : Disponibilité et Tri -->
-            <div class="d-flex flex-wrap align-items-center gap-3 ms-auto">
+            <div class="d-flex flex-wrap align-items-center gap-2 gap-sm-3">
                 <!-- Filtre Disponibilité -->
-                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center gap-2 flex-grow-1 flex-sm-grow-0">
                     <label for="availabilitySelect" class="form-label text-muted small mb-0 d-none d-sm-inline">Disponibilité :</label>
-                    <select name="availability" id="availabilitySelect" class="form-select form-select-sm rounded-3" style="width: auto;" onchange="this.form.submit()">
-                        <option value="available" <?= ($availability === 'available' || $availability === '1') ? 'selected' : '' ?>>En stock uniquement</option>
+                    <select name="availability" id="availabilitySelect" class="form-select form-select-sm rounded-3" onchange="this.form.submit()">
+                        <option value="available" <?= ($availability === 'available' || $availability === '1') ? 'selected' : '' ?>>En stock</option>
                         <option value="all" <?= ($availability === 'all') ? 'selected' : '' ?>>Tous les produits</option>
-                        <option value="0" <?= ($availability === '0' || $availability === 'out_of_stock') ? 'selected' : '' ?>>En rupture de stock</option>
+                        <option value="0" <?= ($availability === '0' || $availability === 'out_of_stock') ? 'selected' : '' ?>>Rupture</option>
                     </select>
                 </div>
 
                 <!-- Filtre de Tri -->
-                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center gap-2 flex-grow-1 flex-sm-grow-0">
                     <label for="sortSelect" class="form-label text-muted small mb-0 d-none d-sm-inline">Trier par :</label>
-                    <select name="sort" id="sortSelect" class="form-select form-select-sm rounded-3" style="width: auto;" onchange="this.form.submit()">
+                    <select name="sort" id="sortSelect" class="form-select form-select-sm rounded-3" onchange="this.form.submit()">
                         <option value="newest" <?= $sort === 'newest' ? 'selected' : '' ?>>Nouveautés</option>
-                        <option value="price_asc" <?= $sort === 'price_asc' ? 'selected' : '' ?>>Prix : croissant &uarr;</option>
-                        <option value="price_desc" <?= $sort === 'price_desc' ? 'selected' : '' ?>>Prix : décroissant &darr;</option>
-                        <option value="name_asc" <?= $sort === 'name_asc' ? 'selected' : '' ?>>Nom : A &rarr; Z</option>
+                        <option value="price_asc" <?= $sort === 'price_asc' ? 'selected' : '' ?>>Prix croissant</option>
+                        <option value="price_desc" <?= $sort === 'price_desc' ? 'selected' : '' ?>>Prix décroissant</option>
+                        <option value="name_asc" <?= $sort === 'name_asc' ? 'selected' : '' ?>>Nom A &rarr; Z</option>
                     </select>
                 </div>
             </div>
@@ -118,14 +118,14 @@
 
 <!-- Liste des Produits -->
 <?php if (empty($products)): ?>
-    <div class="card border-0 shadow-sm p-5 text-center my-4 rounded-4 bg-white">
+    <div class="card border-0 shadow-sm p-4 p-md-5 text-center my-4 rounded-4 bg-white card-zouza">
         <span class="fs-1 text-muted mb-3">&#128269;</span>
         <h3 class="h5 text-dark mb-2">Aucun délice ne correspond à votre recherche.</h3>
         <p class="text-muted small mb-4">
-            Essayez de modifier vos termes de recherche ou de retirer certains filtres.
+            Essayez de modifier vos termes de recherche ou de réinitialiser certains filtres.
         </p>
         <div>
-            <a href="<?= BASE_URL ?>/products" class="btn btn-zouza-sm px-4 py-2">
+            <a href="<?= BASE_URL ?>/products" class="btn btn-zouza px-4 py-2">
                 Voir tout le catalogue de Zouzas
             </a>
         </div>
@@ -135,7 +135,7 @@
         <?php foreach ($products as $prod): ?>
             <?php $isAvailable = (int)$prod['disponible'] === 1; ?>
             <div class="col">
-                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden d-flex flex-column <?= !$isAvailable ? 'opacity-75' : '' ?>" style="transition: transform 0.2s, box-shadow 0.2s;">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden d-flex flex-column card-hover <?= !$isAvailable ? 'opacity-75' : '' ?>">
                     <!-- Image du produit -->
                     <div class="position-relative bg-light text-center" style="height: 220px; overflow: hidden;">
                         <?php if (!empty($prod['image'])): ?>

@@ -41,11 +41,11 @@
         </div>
 
         <!-- Formulaire de recherche textuelle -->
-        <form method="GET" action="<?= BASE_URL ?>/admin/orders" class="d-flex gap-2">
+        <form method="GET" action="<?= BASE_URL ?>/admin/orders" class="d-flex gap-2 flex-grow-1 flex-lg-grow-0 w-100 w-lg-auto">
             <?php if (!empty($currentStatus)): ?>
                 <input type="hidden" name="status" value="<?= e($currentStatus) ?>">
             <?php endif; ?>
-            <div class="input-group input-group-sm" style="min-width: 260px;">
+            <div class="input-group input-group-sm flex-grow-1" style="min-width: 220px;">
                 <input type="text"
                        name="search"
                        class="form-control"
@@ -54,7 +54,7 @@
                 <button class="btn btn-outline-secondary" type="submit">Rechercher</button>
             </div>
             <?php if (!empty($search) || !empty($currentStatus)): ?>
-                <a href="<?= BASE_URL ?>/admin/orders" class="btn btn-sm btn-outline-danger" title="Réinitialiser les filtres">
+                <a href="<?= BASE_URL ?>/admin/orders" class="btn btn-sm btn-outline-danger d-inline-flex align-items-center" title="Réinitialiser les filtres">
                     &times;
                 </a>
             <?php endif; ?>

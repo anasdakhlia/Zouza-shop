@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/" class="text-decoration-none" style="color: #b86b35;">Accueil</a></li>
-        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/cart" class="text-decoration-none" style="color: #b86b35;">Mon Panier</a></li>
+        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/" class="text-decoration-none text-zouza">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/cart" class="text-decoration-none text-zouza">Mon Panier</a></li>
         <li class="breadcrumb-item active" aria-current="page">Validation de commande</li>
     </ol>
 </nav>
@@ -29,9 +29,9 @@ $valNotes         = $old['notes'] ?? '';
             <input type="hidden" name="csrf_token" value="<?= e($csrfToken) ?>">
 
             <!-- Bloc 1: Coordonnées du destinataire -->
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 card-zouza">
                 <h2 class="h5 fw-bold text-dark mb-3 d-flex align-items-center gap-2">
-                    <span class="badge rounded-circle p-2" style="background-color: #b86b35; color: #fff;">1</span>
+                    <span class="badge rounded-circle p-2 bg-zouza text-white">1</span>
                     Vos coordonnées
                 </h2>
 
@@ -98,9 +98,9 @@ $valNotes         = $old['notes'] ?? '';
             </div>
 
             <!-- Bloc 2: Mode de livraison et adresse -->
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 card-zouza">
                 <h2 class="h5 fw-bold text-dark mb-3 d-flex align-items-center gap-2">
-                    <span class="badge rounded-circle p-2" style="background-color: #b86b35; color: #fff;">2</span>
+                    <span class="badge rounded-circle p-2 bg-zouza text-white">2</span>
                     Mode de réception
                 </h2>
 
@@ -170,9 +170,9 @@ $valNotes         = $old['notes'] ?? '';
             </div>
 
             <!-- Bloc 3: Remarques éventuelles -->
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 card-zouza">
                 <h2 class="h5 fw-bold text-dark mb-3 d-flex align-items-center gap-2">
-                    <span class="badge rounded-circle p-2" style="background-color: #b86b35; color: #fff;">3</span>
+                    <span class="badge rounded-circle p-2 bg-zouza text-white">3</span>
                     Instructions particulières
                 </h2>
 
@@ -192,7 +192,7 @@ $valNotes         = $old['notes'] ?? '';
 
             <!-- Bouton de confirmation -->
             <div class="d-grid mb-4">
-                <button type="submit" class="btn btn-lg text-white fw-bold py-3 rounded-3 shadow-sm" style="background-color: #b86b35;">
+                <button type="submit" class="btn btn-zouza btn-lg fw-bold py-3 rounded-3 shadow-sm">
                     &#10004; Confirmer et enregistrer ma commande (<?= formatPrice($total) ?>)
                 </button>
             </div>
@@ -201,7 +201,7 @@ $valNotes         = $old['notes'] ?? '';
 
     <!-- Récapitulatif du panier (Droite) -->
     <div class="col-lg-5">
-        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white sticky-top" style="top: 2rem;">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white sticky-top card-zouza" style="top: 2rem;">
             <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
                 <h3 class="h5 fw-bold text-dark mb-0">Récapitulatif de la commande</h3>
                 <a href="<?= BASE_URL ?>/cart" class="btn btn-sm btn-outline-secondary">Modifier</a>

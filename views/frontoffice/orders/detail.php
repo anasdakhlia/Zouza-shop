@@ -1,8 +1,8 @@
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/" class="text-decoration-none" style="color: #b86b35;">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/" class="text-decoration-none text-zouza">Accueil</a></li>
         <?php if (Session::isLoggedIn()): ?>
-            <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/orders" class="text-decoration-none" style="color: #b86b35;">Mes Commandes</a></li>
+            <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/orders" class="text-decoration-none text-zouza">Mes Commandes</a></li>
         <?php endif; ?>
         <li class="breadcrumb-item active" aria-current="page">Commande #<?= e($order['reference']) ?></li>
     </ol>
@@ -34,7 +34,7 @@
 <div class="row g-4">
     <!-- Détails livraison -->
     <div class="col-lg-7">
-        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 card-zouza">
             <h2 class="h5 fw-bold text-dark mb-3 border-bottom pb-2">Informations de livraison</h2>
 
             <div class="row g-3">
@@ -81,7 +81,7 @@
 
     <!-- Articles commandés -->
     <div class="col-lg-5">
-        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white card-zouza">
             <h2 class="h5 fw-bold text-dark mb-3 border-bottom pb-2">Articles commandés</h2>
 
             <div class="list-group list-group-flush mb-3">

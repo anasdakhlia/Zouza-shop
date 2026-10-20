@@ -67,16 +67,16 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg admin-navbar py-2">
-            <div class="container-fluid px-4">
-                <a class="navbar-brand me-4" href="<?= BASE_URL ?>/admin">
+        <nav class="navbar navbar-expand-lg navbar-dark admin-navbar py-2">
+            <div class="container-fluid px-3 px-lg-4">
+                <a class="navbar-brand me-3 me-lg-4" href="<?= BASE_URL ?>/admin">
                     <?= APP_NAME ?> <span class="badge bg-warning text-dark fs-6 ms-1">Admin</span>
                 </a>
-                <button class="navbar-toggler text-light border-secondary" type="button" data-bs-dismiss="collapse" data-bs-target="#adminNav">
+                <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav" aria-controls="adminNav" aria-expanded="false" aria-label="Menu administration">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="adminNav">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 py-2 py-lg-0">
                         <li class="nav-item">
                             <a class="nav-link" href="<?= BASE_URL ?>/admin">Tableau de bord</a>
                         </li>
@@ -90,14 +90,14 @@
                             <a class="nav-link" href="<?= BASE_URL ?>/admin/orders">Commandes</a>
                         </li>
                     </ul>
-                    <div class="d-flex align-items-center gap-3">
-                        <a href="<?= BASE_URL ?>/" class="btn btn-sm btn-outline-light" target="_blank">
+                    <div class="d-flex flex-wrap align-items-center gap-2 pt-2 pt-lg-0 border-top border-secondary border-lg-0">
+                        <a href="<?= BASE_URL ?>/" class="btn btn-sm btn-outline-light" target="_blank" rel="noopener">
                             Voir le site public &rarr;
                         </a>
-                        <span class="text-light small d-none d-md-inline">
+                        <span class="text-light small d-none d-md-inline ms-1">
                             <?= e($currentUser['prenom'] ?? 'Admin') ?> (<strong><?= e($currentUser['role'] ?? 'admin') ?></strong>)
                         </span>
-                        <a href="<?= BASE_URL ?>/logout" class="btn btn-sm btn-danger">
+                        <a href="<?= BASE_URL ?>/logout" class="btn btn-sm btn-danger ms-auto ms-lg-0">
                             Déconnexion
                         </a>
                     </div>

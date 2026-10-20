@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle ?? 'Connexion', ENT_QUOTES, 'UTF-8') ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/assets/css/front.css" rel="stylesheet">
     <style>
         body {
             background-color: #faf7f2;
             color: #3d2f24;
-            font-family: system-ui, -apple-system, sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -22,35 +22,12 @@
             box-shadow: 0 10px 30px rgba(139, 90, 43, 0.08);
             max-width: 440px;
             width: 100%;
-            padding: 2.5rem;
-        }
-        .brand-title {
-            color: #b86b35;
-            font-weight: 700;
-        }
-        .btn-zouza {
-            background-color: #b86b35;
-            color: #ffffff;
-            border: none;
-            padding: 0.65rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            width: 100%;
-            transition: background-color 0.2s;
-        }
-        .btn-zouza:hover {
-            background-color: #965324;
-            color: #ffffff;
-        }
-        .form-control:focus {
-            border-color: #b86b35;
-            box-shadow: 0 0 0 0.25rem rgba(184, 107, 53, 0.2);
         }
     </style>
 </head>
 <body>
     <div class="container py-4">
-        <div class="login-card mx-auto">
+        <div class="login-card mx-auto p-4 p-md-5 card-zouza">
             <div class="text-center mb-4">
                 <h1 class="h3 brand-title mb-1"><?= APP_NAME ?></h1>
                 <p class="text-muted small">Espace de Connexion</p>
