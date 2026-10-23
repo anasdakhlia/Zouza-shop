@@ -75,3 +75,5 @@ if (!function_exists('formatPrice')) {
         return number_format((float)$price, $decimals, '.', ' ') . ' ' . $symbol;
     }
 }
+
+

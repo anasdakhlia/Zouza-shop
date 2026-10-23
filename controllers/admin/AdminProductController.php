@@ -22,6 +22,7 @@ class AdminProductController extends Controller
 
     public function __construct()
     {
+        $this->requireAdmin();
         $this->productModel  = new Product();
         $this->categoryModel = new Category();
     }

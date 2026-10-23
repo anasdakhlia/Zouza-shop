@@ -167,6 +167,10 @@ class ProfileController extends Controller
             $newHash = password_hash($newPassword, PASSWORD_DEFAULT);
             $this->userModel->updatePassword($userId, $newHash);
 
+            // 7. Régénération de l'identifiant de session et du jeton CSRF (anti session-hijacking)
+            session_regenerate_id(true);
+            Session::regenerateCsrfToken();
+
             Session::setFlash('success', 'Votre mot de passe a été modifié avec succès.');
         } catch (Throwable $e) {
             error_log('Erreur changement mot de passe : ' . $e->getMessage());

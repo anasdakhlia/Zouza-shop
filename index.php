@@ -13,6 +13,12 @@ require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/core/Session.php';
 Session::start();
 
+// 2b. En-têtes de sécurité HTTP et masquage de signature serveur
+header_remove('X-Powered-By');
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: SAMEORIGIN');
+header('Referrer-Policy: strict-origin-when-cross-origin');
+
 // 3. Enregistrement du gestionnaire d'erreurs centralisé
 require_once __DIR__ . '/core/ErrorHandler.php';
 ErrorHandler::register();

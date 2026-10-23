@@ -184,7 +184,13 @@ class OrderController extends Controller
         } catch (Throwable $e) {
             // Le panier est préservé grâce au rollback dans createOrder()
             error_log('Erreur lors du traitement de la commande : ' . $e->getMessage());
-            Session::setFlash('error', 'Impossible de valider la commande : ' . $e->getMessage());
+
+            // Masquer les détails SQL/techniques internes en cas d'exception inattendue (anti-fuite d'informations)
+            $userMessage = ($e instanceof RuntimeException)
+                ? $e->getMessage()
+                : 'Une erreur technique est survenue lors de l\'enregistrement de votre commande. Veuillez réessayer ultérieurement.';
+
+            Session::setFlash('error', 'Impossible de valider la commande : ' . $userMessage);
             $_SESSION['_checkout_old'] = $_POST;
             $this->redirect('/checkout');
         }

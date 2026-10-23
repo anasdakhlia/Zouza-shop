@@ -15,6 +15,7 @@ class AdminCategoryController extends Controller
 
     public function __construct()
     {
+        $this->requireAdmin();
         $this->categoryModel = new Category();
     }
 
