@@ -41,6 +41,7 @@ require_once __DIR__ . '/controllers/admin/AdminDashboardController.php';
 require_once __DIR__ . '/controllers/admin/AdminCategoryController.php';
 require_once __DIR__ . '/controllers/admin/AdminProductController.php';
 require_once __DIR__ . '/controllers/admin/AdminOrderController.php';
+require_once __DIR__ . '/controllers/SitemapController.php';
 
 // 6. Définition des routes de l'application
 $router = new Router();
@@ -49,6 +50,10 @@ $router = new Router();
 $router->get('/', [HomeController::class, 'index']);
 $router->get('/products', [ProductController::class, 'index']);
 $router->get('/products/detail', [ProductController::class, 'detail']);
+
+// Routes SEO dynamiques
+$router->get('/sitemap.xml', [SitemapController::class, 'index']);
+$router->get('/robots.txt', [SitemapController::class, 'robots']);
 
 // Panier d'achat (accessible à tous : invités et connectés)
 $router->get('/cart', [CartController::class, 'index']);

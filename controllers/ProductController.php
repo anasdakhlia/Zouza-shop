@@ -95,17 +95,25 @@ class ProductController extends Controller
             $queryParams['sort'] = $sortParam;
         }
 
-        // 9. Titre dynamique et descriptif de la page (SEO & UX)
+        // 9. Titre dynamique et métadonnées SEO descriptives de la page
         if ($searchParam !== '') {
-            $pageTitle = 'Recherche : « ' . $searchParam . ' » | ' . APP_NAME;
+            $pageTitle       = 'Recherche : « ' . $searchParam . ' » | ' . APP_NAME;
+            $metaDescription = 'Résultats de recherche pour « ' . $searchParam . ' » parmi nos Zouzas artisanales chez ' . APP_NAME . '.';
+            $canonicalUrl    = BASE_URL . '/products';
         } elseif ($selectedCategory) {
-            $pageTitle = 'Nos ' . $selectedCategory['nom'] . ' | ' . APP_NAME;
+            $pageTitle       = 'Nos ' . $selectedCategory['nom'] . ' | ' . APP_NAME;
+            $metaDescription = 'Découvrez notre sélection de ' . $selectedCategory['nom'] . ' artisanales confectionnées avec soin chez ' . APP_NAME . '.';
+            $canonicalUrl    = BASE_URL . '/products?category=' . urlencode($selectedCategory['slug']);
         } else {
-            $pageTitle = 'Catalogue des Délices Zouza | ' . APP_NAME;
+            $pageTitle       = 'Catalogue des Délices Zouza | ' . APP_NAME;
+            $metaDescription = 'Consultez notre catalogue complet de Zouzas artisanales tunisiennes : amande, noisette, pistache, chocolat et assortiments gourmands.';
+            $canonicalUrl    = BASE_URL . '/products';
         }
 
         $this->render('frontoffice/products/index', [
             'pageTitle'        => $pageTitle,
+            'metaDescription'  => $metaDescription,
+            'canonicalUrl'     => $canonicalUrl,
             'categories'       => $categories,
             'selectedCategory' => $selectedCategory,
             'products'         => $result['items'],
@@ -141,9 +149,25 @@ class ProductController extends Controller
             return;
         }
 
+        $metaDescription = !empty($product['description'])
+            ? mb_strimwidth(strip_tags($product['description']), 0, 155, '...')
+            : ($product['nom'] . ' — Pâtisserie artisanale faite maison chez ' . APP_NAME . '. Ingrédients nobles et tradition.');
+
+        $canonicalUrl = !empty($product['slug'])
+            ? BASE_URL . '/products/detail?slug=' . urlencode($product['slug'])
+            : BASE_URL . '/products/detail?id=' . (int)$product['product_id'];
+
+        $ogImage = !empty($product['image'])
+            ? BASE_URL . '/uploads/products/' . rawurlencode($product['image'])
+            : '';
+
         $this->render('frontoffice/products/detail', [
-            'pageTitle' => $product['nom'] . ' | ' . APP_NAME,
-            'product'   => $product,
+            'pageTitle'       => $product['nom'] . ' | ' . APP_NAME,
+            'metaDescription' => $metaDescription,
+            'canonicalUrl'    => $canonicalUrl,
+            'ogType'          => 'product',
+            'ogImage'         => $ogImage,
+            'product'         => $product,
         ], 'front');
     }
 }

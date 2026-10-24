@@ -1,9 +1,30 @@
+<?php
+$seoDesc = !empty($metaDescription) ? $metaDescription : (APP_NAME . ' — Pâtisserie artisanale tunisienne d’excellence. Découvrez nos Zouzas faites maison aux amandes, noisettes, pistaches et chocolat.');
+$seoCanonical = !empty($canonicalUrl) ? $canonicalUrl : (BASE_URL . strtok($_SERVER['REQUEST_URI'] ?? '/', '?'));
+$seoRobots = !empty($robotsMeta) ? $robotsMeta : 'index, follow';
+$seoOgType = !empty($ogType) ? $ogType : 'website';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle ?? APP_NAME, ENT_QUOTES, 'UTF-8') ?></title>
+    <meta name="description" content="<?= htmlspecialchars($seoDesc, ENT_QUOTES, 'UTF-8') ?>">
+    <meta name="robots" content="<?= htmlspecialchars($seoRobots, ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="canonical" href="<?= htmlspecialchars($seoCanonical, ENT_QUOTES, 'UTF-8') ?>">
+
+    <!-- Open Graph / Réseaux Sociaux -->
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:type" content="<?= htmlspecialchars($seoOgType, ENT_QUOTES, 'UTF-8') ?>">
+    <meta property="og:site_name" content="<?= htmlspecialchars(APP_NAME, ENT_QUOTES, 'UTF-8') ?>">
+    <meta property="og:title" content="<?= htmlspecialchars($pageTitle ?? APP_NAME, ENT_QUOTES, 'UTF-8') ?>">
+    <meta property="og:description" content="<?= htmlspecialchars($seoDesc, ENT_QUOTES, 'UTF-8') ?>">
+    <meta property="og:url" content="<?= htmlspecialchars($seoCanonical, ENT_QUOTES, 'UTF-8') ?>">
+    <?php if (!empty($ogImage)): ?>
+    <meta property="og:image" content="<?= htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8') ?>">
+    <?php endif; ?>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>/assets/css/front.css" rel="stylesheet">
 </head>
@@ -109,8 +130,19 @@
         </div>
     </main>
 
-    <footer class="py-4 text-center mt-auto">
+    <footer class="py-4 text-center mt-auto border-top bg-white">
         <div class="container">
+            <nav class="d-flex flex-wrap justify-content-center gap-3 mb-2 small" aria-label="Navigation pied de page">
+                <a href="<?= BASE_URL ?>/" class="text-decoration-none text-muted">Accueil</a>
+                <a href="<?= BASE_URL ?>/products" class="text-decoration-none text-muted">Nos Zouzas</a>
+                <a href="<?= BASE_URL ?>/cart" class="text-decoration-none text-muted">Mon Panier</a>
+                <?php if (!empty($currentUser)): ?>
+                    <a href="<?= BASE_URL ?>/profile" class="text-decoration-none text-muted">Mon Profil</a>
+                    <a href="<?= BASE_URL ?>/orders" class="text-decoration-none text-muted">Mes Commandes</a>
+                <?php else: ?>
+                    <a href="<?= BASE_URL ?>/login" class="text-decoration-none text-muted">Connexion</a>
+                <?php endif; ?>
+            </nav>
             <p class="mb-0 text-muted small">&copy; <?= date('Y') ?> <?= APP_NAME ?> — Tous droits réservés.</p>
         </div>
     </footer>

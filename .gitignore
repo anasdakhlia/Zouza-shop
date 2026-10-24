@@ -38,6 +38,7 @@ uploads/products/*
 # Temporary files
 tmp/
 temp/
+scratch/
 
 # Vendor (if dependencies are introduced in the future)
 /vendor/

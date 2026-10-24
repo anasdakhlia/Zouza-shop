@@ -133,7 +133,12 @@
 <?php else: ?>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
         <?php foreach ($products as $prod): ?>
-            <?php $isAvailable = (int)$prod['disponible'] === 1; ?>
+            <?php
+            $isAvailable = (int)$prod['disponible'] === 1;
+            $prodDetailUrl = !empty($prod['slug'])
+                ? BASE_URL . '/products/detail?slug=' . urlencode($prod['slug'])
+                : BASE_URL . '/products/detail?id=' . (int)$prod['product_id'];
+            ?>
             <div class="col">
                 <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden d-flex flex-column card-hover <?= !$isAvailable ? 'opacity-75' : '' ?>">
                     <!-- Image du produit -->
@@ -142,6 +147,7 @@
                             <img src="<?= BASE_URL ?>/uploads/products/<?= e($prod['image']) ?>"
                                  alt="<?= e($prod['nom']) ?>"
                                  class="w-100 h-100"
+                                 loading="lazy"
                                  style="object-fit: cover;">
                         <?php else: ?>
                             <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-muted">
@@ -166,7 +172,7 @@
                     <!-- Contenu de la fiche -->
                     <div class="card-body p-4 d-flex flex-column flex-grow-1">
                         <h2 class="card-title h5 fw-bold text-dark mb-2">
-                            <a href="<?= BASE_URL ?>/products/detail?id=<?= (int)$prod['product_id'] ?>" class="text-decoration-none text-dark">
+                            <a href="<?= $prodDetailUrl ?>" class="text-decoration-none text-dark">
                                 <?= e($prod['nom']) ?>
                             </a>
                         </h2>
@@ -183,7 +189,7 @@
                                 </span>
                             </div>
                             <div class="d-flex gap-2">
-                                <a href="<?= BASE_URL ?>/products/detail?id=<?= (int)$prod['product_id'] ?>" class="btn btn-sm btn-outline-secondary">
+                                <a href="<?= $prodDetailUrl ?>" class="btn btn-sm btn-outline-secondary">
                                     Détails
                                 </a>
                                 <?php if ($isAvailable): ?>

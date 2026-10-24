@@ -15,8 +15,10 @@ class HomeController extends Controller
     public function index(): void
     {
         $this->render('frontoffice/home', [
-            'pageTitle' => 'Bienvenue chez ' . APP_NAME,
-            'tagline'   => APP_TAGLINE,
+            'pageTitle'       => 'Bienvenue chez ' . APP_NAME . ' — ' . APP_TAGLINE,
+            'tagline'         => APP_TAGLINE,
+            'metaDescription' => 'Découvrez les délices artisanaux de Zouza Shop en Tunisie : Zouzas traditionnelles, amande, noisette et chocolat préparées avec passion.',
+            'canonicalUrl'    => BASE_URL . '/',
         ]);
     }
 }

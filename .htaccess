@@ -20,6 +20,9 @@ Options +FollowSymLinks
     # Bloquer l'accès direct aux répertoires internes sensibles
     RewriteRule ^(\.git|config|core|database|views) - [F,L,NC]
 
+    # Router dynamiquement robots.txt et sitemap.xml vers le Front Controller
+    RewriteRule ^(robots\.txt|sitemap\.xml)$ index.php [QSA,L]
+
     # Laisser passer directement les requêtes ciblant des fichiers ou dossiers réels existants
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
